@@ -125,9 +125,18 @@ body {
   }
 }
 
-.voltage-button button:hover + svg,
-.voltage-button button:hover + svg + .dots {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .voltage-button button:hover + svg,
+  .voltage-button button:hover + svg + .dots {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .voltage-button button:active + svg,
+  .voltage-button button:active + svg + .dots {
+    opacity: 1;
+  }
 }
 
 .voltage-button svg {
