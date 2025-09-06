@@ -23,10 +23,6 @@
   --conic-magenta: magenta;
 }
 
-html * {
-  transition: 0.3s ease;
-}
-
 body {
   background: var(--main-bg);
   width: 100%;
@@ -35,6 +31,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  transition: background 0.25s ease;
 }
 
 #canvas-container-wrapper {
@@ -75,6 +72,7 @@ body {
   background: var(--main-bg);
   border-radius: 7px;
   padding: 10px;
+  transition: background 0.25s ease;
 }
 
 #canvas {
@@ -85,6 +83,8 @@ body {
   margin-bottom: 10px;
   border: 5px solid var(--border-color);
   border-radius: 15px 15px 0 0;
+  transition: background 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .buttons-wrapper {
@@ -109,11 +109,20 @@ body {
   font-size: 1.2rem;
   line-height: 1em;
   letter-spacing: 0.075em;
+  cursor: pointer;
+  transition: background 0.25s ease;
 }
 
-.voltage-button button:hover {
-  cursor: pointer;
-  background: var(--button-hover-color);
+@media (hover: hover) and (pointer: fine) {
+  .voltage-button button:hover {
+    background: var(--button-hover-color);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .voltage-button button:active {
+    background: var(--button-hover-color);
+  }
 }
 
 .voltage-button button:hover + svg,
@@ -130,8 +139,7 @@ body {
   height: calc(100% + 1.5em);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s;
-  transition-delay: 0.1s;
+  transition: opacity 0.25s ease;
 }
 
 #btn-create svg path {
@@ -163,8 +171,7 @@ body {
 
 .voltage-button .dots {
   opacity: 0;
-  transition: opacity 0.3s;
-  transition-delay: 0.4s;
+  transition: opacity 0.25s ease;
 }
 
 .voltage-button .dots .dot {
@@ -186,28 +193,24 @@ body {
   top: 0;
   left: 55%;
   animation: fly-up 3s linear infinite;
-  animation-delay: 0.5s;
 }
 
 .voltage-button .dots .dot-3 {
   top: 0;
   left: 80%;
   animation: fly-up 3s linear infinite;
-  animation-delay: 1s;
 }
 
 .voltage-button .dots .dot-4 {
   bottom: 0;
   left: 30%;
   animation: fly-down 3s linear infinite;
-  animation-delay: 2.5s;
 }
 
 .voltage-button .dots .dot-5 {
   bottom: 0;
   left: 65%;
   animation: fly-down 3s linear infinite;
-  animation-delay: 1.5s;
 }
 
 @keyframes spark-1 {
