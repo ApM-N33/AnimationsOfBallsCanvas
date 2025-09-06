@@ -6,8 +6,15 @@ function AnimationsOfBalls() {
   const canvasContainerWrapper = document.getElementById(
     "canvas-container-wrapper"
   )
-  /** @type {CanvasRenderingContext2D} */
+  const buttonsArray = [createBallBtn, deleteBallBtn, setColorsBtn]
+  buttonsArray.forEach((btn) => {
+    btn.addEventListener("touchstart", () => btn.classList.add("active"))
+    btn.addEventListener("touchend", () => btn.classList.remove("active"))
+    btn.addEventListener("mouseenter", () => btn.classList.add("active"))
+    btn.addEventListener("mouseleave", () => btn.classList.remove("active"))
+  })
 
+  /** @type {CanvasRenderingContext2D} */
   const ctx = canvas.getContext("2d")
 
   canvas.width = canvas.offsetWidth

@@ -1,10 +1,10 @@
 @media (max-width: 513px) {
-  #gameCanvas {
-    height: 55vh;
-  }
-
   #canvas-container-wrapper {
     border-width: 15px;
+  }
+
+  #canvas {
+    height: 60vh;
   }
 }
 
@@ -13,11 +13,11 @@
     border-width: 5px;
   }
 
-  #gameCanvas {
-    border-width: 3px;
-  }
-
   #canvas-container {
     padding: 10px 3px 10px;
+  }
+
+  #canvas {
+    border-width: 3px;
   }
 }

@@ -117,30 +117,13 @@ body {
   transition: background 0.1s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .voltage-button button:hover {
-    background: var(--button-hover-color);
-  }
+.voltage-button button.active {
+  background: var(--button-hover-color);
 }
 
-@media (hover: none) and (pointer: coarse) {
-  .voltage-button button:active {
-    background: var(--button-hover-color);
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .voltage-button button:hover + svg,
-  .voltage-button button:hover + svg + .dots {
-    opacity: 1;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .voltage-button button:active + svg,
-  .voltage-button button:active + svg + .dots {
-    opacity: 1;
-  }
+.voltage-button button.active + svg,
+.voltage-button button.active + svg + .dots {
+  opacity: 1;
 }
 
 .voltage-button svg {
