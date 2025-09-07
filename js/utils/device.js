@@ -1,4 +1,4 @@
-const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches
+const mediaQuery = window.matchMedia("(hover: none) and (pointer: coarse)")
 
 const forTouchDevices = (btn) => {
   btn.addEventListener("touchstart", () => btn.classList.add("active"))
@@ -10,4 +10,9 @@ const forDesktopDevices = (btn) => {
   btn.addEventListener("mouseleave", () => btn.classList.remove("active"))
 }
 
-export { isTouch, forTouchDevices, forDesktopDevices }
+const changeDeviceEvents = (buttons, isTouch) => {
+  if (isTouch) buttons.forEach((btn) => forTouchDevices(btn))
+  else buttons.forEach((btn) => forDesktopDevices(btn))
+}
+
+export { mediaQuery, forTouchDevices, forDesktopDevices, changeDeviceEvents }

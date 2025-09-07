@@ -2,7 +2,7 @@ import {
   ROOT_INITIAL_COLORS,
   ROOT_COLORS_VERIABLES,
 } from "./utils/constants.js"
-import { isTouch, forTouchDevices, forDesktopDevices } from "./utils/device.js"
+import { mediaQuery, changeDeviceEvents } from "./utils/device.js"
 
 function AnimationsOfBalls() {
   const canvas = document.getElementById("canvas")
@@ -60,9 +60,12 @@ function AnimationsOfBalls() {
     }
   }
 
-  document.querySelectorAll(".voltage-button button").forEach((btn) => {
-    isTouch ? forTouchDevices(btn) : forDesktopDevices(btn)
-  })
+  const mediaQueryOnChange = (e) => {
+    const isTouch = e ? e.matches : mediaQuery.matches
+    const buttons = document.querySelectorAll(".voltage-button button")
+    changeDeviceEvents(buttons, isTouch)
+  }
+  mediaQueryOnChange()
 
   const createBalls = () => {
     const ball = Ball()
@@ -187,6 +190,7 @@ function AnimationsOfBalls() {
   createBallBtn.addEventListener("click", createBalls)
   deleteBallBtn.addEventListener("click", deleteBalls)
   setColorsBtn.addEventListener("click", setColors)
+  mediaQuery.addEventListener("change", mediaQueryOnChange)
   window.addEventListener("resize", resizeCanvas)
 }
 
