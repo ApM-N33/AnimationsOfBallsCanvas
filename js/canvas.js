@@ -1,3 +1,9 @@
+import {
+  ROOT_INITIAL_COLORS,
+  ROOT_COLORS_VERIABLES,
+} from "./utils/constants.js"
+import { isTouch, forTouchDevices, forDesktopDevices } from "./utils/device.js"
+
 function AnimationsOfBalls() {
   const canvas = document.getElementById("canvas")
   const createBallBtn = document.getElementById("create-ball-btn")
@@ -6,13 +12,6 @@ function AnimationsOfBalls() {
   const canvasContainerWrapper = document.getElementById(
     "canvas-container-wrapper"
   )
-  const buttonsArray = [createBallBtn, deleteBallBtn, setColorsBtn]
-  buttonsArray.forEach((btn) => {
-    btn.addEventListener("touchstart", () => btn.classList.add("active"))
-    btn.addEventListener("touchend", () => btn.classList.remove("active"))
-    btn.addEventListener("mouseenter", () => btn.classList.add("active"))
-    btn.addEventListener("mouseleave", () => btn.classList.remove("active"))
-  })
 
   /** @type {CanvasRenderingContext2D} */
   const ctx = canvas.getContext("2d")
@@ -60,6 +59,10 @@ function AnimationsOfBalls() {
       },
     }
   }
+
+  document.querySelectorAll(".voltage-button button").forEach((btn) => {
+    isTouch ? forTouchDevices(btn) : forDesktopDevices(btn)
+  })
 
   const createBalls = () => {
     const ball = Ball()
@@ -134,38 +137,14 @@ function AnimationsOfBalls() {
     randomColor: c.setRGB(256, 256, 256),
   })
 
-  const setRootInitialColors = (
-    rootInitialColors = {
-      "--main-bg": "#0d1127",
-      "--border-color": "#5978f3",
-      "--canvas-bg": "#f0f0f0",
-      "--white": "#fff",
-      "--conic-red": "red",
-      "--conic-yellow": "yellow",
-      "--conic-lime": "lime",
-      "--conic-blue": "blue",
-      "--conic-aqua": "aqua",
-      "--conic-magenta": "magenta",
-    }
-  ) => {
+  const setRootInitialColors = (rootInitialColors = ROOT_INITIAL_COLORS) => {
     Object.entries(rootInitialColors).forEach(([colorVeriable, colorValue]) => {
       document.documentElement.style.setProperty(colorVeriable, colorValue)
     })
   }
 
   const setRootNewColorsValues = (
-    rootColorsVeriables = [
-      "--main-bg",
-      "--border-color",
-      "--canvas-bg",
-      "--white",
-      "--conic-red",
-      "--conic-yellow",
-      "--conic-lime",
-      "--conic-blue",
-      "--conic-aqua",
-      "--conic-magenta",
-    ]
+    rootColorsVeriables = ROOT_COLORS_VERIABLES
   ) => {
     rootColorsVeriables.forEach((colorVeriable) => {
       const { randomGradient, randomColor } = Colors()
@@ -190,7 +169,6 @@ function AnimationsOfBalls() {
   let frameCount = 0
   const refreshCanvasGlow = () => {
     frameCount++
-
     if (frameCount % 5 === 0) {
       const { randomColor } = Colors()
       canvas.style.boxShadow = `
@@ -202,7 +180,6 @@ function AnimationsOfBalls() {
     0 0 20px ${randomColor},
     0 0 40px ${randomColor}`
     }
-
     requestAnimationFrame(refreshCanvasGlow)
   }
   refreshCanvasGlow()
