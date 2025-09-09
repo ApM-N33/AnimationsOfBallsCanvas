@@ -44,18 +44,10 @@ function AnimationsOfBalls() {
         this.posX += this.xSpeed
         this.posY += this.ySpeed
 
-        if (
-          this.posX >= canvas.width - this.radius ||
-          this.posX < this.radius
-        ) {
-          this.xSpeed = this.xSpeed * -1
-        }
-        if (
-          this.posY >= canvas.height - this.radius ||
-          this.posY < this.radius
-        ) {
-          this.ySpeed = this.ySpeed * -1
-        }
+        if (this.posX >= canvas.width - this.radius || this.posX < this.radius)
+          this.xSpeed *= -1
+        if (this.posY >= canvas.height - this.radius || this.posY < this.radius)
+          this.ySpeed *= -1
       },
     }
   }
@@ -123,41 +115,39 @@ function AnimationsOfBalls() {
   animateScene()
 
   const RandomColors = () => ({
-    setAngle: (deg) => Math.floor(Math.random() * deg),
-    setRGB: (number1, number2, number3) => `rgb(
-  ${Math.floor(Math.random() * number1)},
-  ${Math.floor(Math.random() * number2)},
-  ${Math.floor(Math.random() * number3)})`,
+    setAngle: (d) => Math.floor(Math.random() * d),
+    setRGB: (r, g, b) => `rgb(
+      ${Math.floor(Math.random() * r)},
+      ${Math.floor(Math.random() * g)},
+      ${Math.floor(Math.random() * b)})`,
   })
 
   const c = RandomColors()
   const Colors = () => ({
-    randomGradient: `linear-gradient(
-  ${c.setAngle(360)}deg,
-  ${c.setRGB(256, 256, 256)},
-  ${c.setRGB(256, 256, 256)},
-  ${c.setRGB(256, 256, 256)})`,
-    randomColor: c.setRGB(256, 256, 256),
+    randomGradient: () => `linear-gradient(
+        ${c.setAngle(360)}deg,
+        ${c.setRGB(256, 256, 256)},
+        ${c.setRGB(256, 256, 256)},
+        ${c.setRGB(256, 256, 256)})`,
+    randomColor: () => c.setRGB(256, 256, 256),
   })
 
+  const style = document.documentElement.style
   const setRootInitialColors = (rootInitialColors = ROOT_INITIAL_COLORS) => {
     Object.entries(rootInitialColors).forEach(([colorVeriable, colorValue]) => {
-      document.documentElement.style.setProperty(colorVeriable, colorValue)
+      style.setProperty(colorVeriable, colorValue)
     })
   }
 
+  const { randomColor, randomGradient } = Colors()
   const setRootNewColorsValues = (
     rootColorsVeriables = ROOT_COLORS_VERIABLES
   ) => {
     rootColorsVeriables.forEach((colorVeriable) => {
-      const { randomGradient, randomColor } = Colors()
       if (colorVeriable === "--main-bg" || colorVeriable === "--canvas-bg") {
-        document.documentElement.style.setProperty(
-          colorVeriable,
-          randomGradient
-        )
+        style.setProperty(colorVeriable, randomGradient())
       } else {
-        document.documentElement.style.setProperty(colorVeriable, randomColor)
+        style.setProperty(colorVeriable, randomColor())
       }
     })
   }
@@ -170,18 +160,18 @@ function AnimationsOfBalls() {
   }
 
   let frameCount = 0
+  const { randomColor: randColor } = Colors()
   const refreshCanvasGlow = () => {
     frameCount++
     if (frameCount % 5 === 0) {
-      const { randomColor } = Colors()
       canvas.style.boxShadow = `
-    0 0 10px ${randomColor},
-    0 0 20px ${randomColor},
-    0 0 40px ${randomColor}`
+    0 0 10px ${randColor()},
+    0 0 20px ${randColor()},
+    0 0 40px ${randColor()}`
       canvasContainerWrapper.style.boxShadow = `
-    0 0 10px ${randomColor},
-    0 0 20px ${randomColor},
-    0 0 40px ${randomColor}`
+    0 0 10px ${randColor()},
+    0 0 20px ${randColor()},
+    0 0 40px ${randColor()}`
     }
     requestAnimationFrame(refreshCanvasGlow)
   }
